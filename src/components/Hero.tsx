@@ -44,7 +44,7 @@ export function Hero() {
                 style={{ border: "2px solid var(--border)" }}
               >
                 <Image
-                  src="/avatar.png"
+                  src="/avatar.jpg"
                   alt="Telaynew Ambachew"
                   fill
                   className="object-cover"
