@@ -11,6 +11,7 @@ import { siteConfig } from "@/lib/data";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [clickedSection, setClickedSection] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -19,7 +20,44 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => { setIsOpen(false); }, [pathname]);
+  useEffect(() => {
+    setIsOpen(false);
+    // Reset section highlight when navigating away from homepage
+    if (pathname !== "/") {
+      setClickedSection(null);
+      return;
+    }
+
+    // Track which section is in view as user scrolls
+    const sectionIds = ["about", "experience", "projects", "tech-stack"];
+    const visible = new Map<string, boolean>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visible.set(entry.target.id, entry.isIntersecting);
+        });
+        // Pick the topmost visible section (first one intersected scanning top-down)
+        for (const id of sectionIds) {
+          if (visible.get(id)) {
+            setClickedSection(`/#${id}`);
+            return;
+          }
+        }
+      },
+      {
+        rootMargin: "-90px 0px -55% 0px",
+        threshold: 0,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [pathname]);
 
   const navLinks = [
     { href: "/#about",      label: "About" },
@@ -31,8 +69,14 @@ export function Navbar() {
   ];
 
   const isActive = (href: string) => {
-    if (href.startsWith("/#")) return pathname === "/";
+    if (href.startsWith("/#")) return clickedSection === href;
     return pathname === href || pathname.startsWith(href);
+  };
+
+  const handleClick = (href: string) => {
+    if (href.startsWith("/#")) {
+      setClickedSection(href);
+    }
   };
 
   return (
@@ -65,24 +109,28 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-7">
+          {/* Desktop nav — all accent pill style */}
+          <div className="hidden md:flex items-center gap-1.5">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium relative group transition-colors duration-200 ${
+                onClick={() => handleClick(link.href)}
+                className={`text-sm font-medium transition-all duration-200 px-4 py-2 rounded-full ${
                   isActive(link.href)
-                    ? "text-[var(--text-1)]"
-                    : "text-[var(--text-2)] hover:text-[var(--text-1)]"
+                    ? "text-white shadow-sm"
+                    : "text-[var(--accent)] hover:text-white"
                 }`}
+                style={{
+                  background: isActive(link.href)
+                    ? "linear-gradient(135deg, var(--accent), var(--accent-2))"
+                    : "transparent",
+                  border: isActive(link.href)
+                    ? "none"
+                    : "1px solid var(--accent)",
+                }}
               >
                 {link.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-[2px] rounded-full transition-all duration-300
-                    ${isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"}`}
-                  style={{ background: "var(--accent)" }}
-                />
               </Link>
             ))}
           </div>
@@ -163,7 +211,10 @@ export function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleClick(link.href);
+                      }}
                       className={`block text-base font-medium py-3 px-4 rounded-xl transition-all ${
                         isActive(link.href)
                           ? "text-[var(--text-1)] bg-[var(--surface)]"

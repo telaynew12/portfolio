@@ -31,13 +31,29 @@ export function Projects() {
                 style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
               >
                 {/* Image */}
-                <div className="relative h-60 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                <div className="relative overflow-hidden" style={{ height: (project as any).images ? '176px' : '240px' }}>
+                  {(project as any).images ? (
+                    <div className="grid grid-cols-2 h-full">
+                      {(project as any).images.map((img: string, i: number) => (
+                        <div key={i} className="relative h-full">
+                          <Image
+                            src={img}
+                            alt={`${project.title} screenshot ${i + 1}`}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
+                  {/* Gradient overlay */}
                   <div
                     className="absolute inset-0"
                     style={{ background: "linear-gradient(to top, var(--surface) 0%, transparent 60%)" }}

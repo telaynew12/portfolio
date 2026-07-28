@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import { Github, Star, GitFork, ExternalLink } from "lucide-react";
 import { githubSnapshot, siteConfig } from "@/lib/data";
 import { Reveal } from "./Reveal";
+import { ContributionChart } from "./ContributionChart";
 
 export function GitHubStats() {
-  const username = siteConfig.githubUsername;
-
   return (
     <section id="github" className="py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,15 +54,10 @@ export function GitHubStats() {
                 <h3 className="text-lg font-bold text-[var(--text-1)]">Contribution Graph</h3>
               </div>
               <div
-                className="rounded-xl overflow-hidden"
+                className="rounded-xl overflow-hidden p-5"
                 style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)" }}
               >
-                <img
-                  src={`https://ghchart.rshah.org/e85d3a/${username}`}
-                  alt="GitHub contribution chart"
-                  className="w-full"
-                  loading="lazy"
-                />
+                <ContributionChart />
               </div>
               <div className="mt-4 flex justify-end">
                 <a

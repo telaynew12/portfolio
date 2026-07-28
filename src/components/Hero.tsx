@@ -31,27 +31,17 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center"
         >
-          {/* Avatar */}
+          {/* Avatar with online dot */}
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-8 flex justify-center"
+            className="mb-6 flex justify-center"
           >
             <div className="relative">
-              {/* Spinning ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-3px] rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent))",
-                  borderRadius: "50%",
-                }}
-              />
               <div
-                className="relative w-28 h-28 rounded-full overflow-hidden"
-                style={{ border: "3px solid var(--bg)" }}
+                className="relative w-28 h-28 rounded-full overflow-hidden shadow-lg"
+                style={{ border: "2px solid var(--border)" }}
               >
                 <Image
                   src="/avatar.png"
@@ -71,12 +61,12 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Availability badge */}
+          {/* Availability badge + Name stacked */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-8 inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
+            className="mb-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
             style={{
               background: "var(--surface)",
               border: "1px solid var(--border)",
@@ -108,6 +98,9 @@ export function Hero() {
             className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 text-[var(--text-2)]"
           >
             {siteConfig.title}
+            <span className="inline-block ml-3 text-sm font-normal text-[var(--text-3)]">
+              — Addis Ababa
+            </span>
           </motion.h2>
 
           {/* Description */}
@@ -115,10 +108,12 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-lg md:text-xl mb-10 text-[var(--text-2)] max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl mb-8 text-[var(--text-2)] max-w-3xl mx-auto leading-relaxed"
           >
             {siteConfig.description}
           </motion.p>
+
+
 
           {/* Highlight pills */}
           <motion.div
@@ -130,8 +125,12 @@ export function Hero() {
             {heroHighlights.map((highlight, i) => (
               <span
                 key={i}
-                className="px-4 py-2 rounded-full text-sm font-medium text-[var(--text-2)]"
-                style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+                className="px-4 py-2 rounded-full text-sm font-medium"
+                style={{
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  color: i === 0 ? "var(--accent)" : "var(--text-2)",
+                }}
               >
                 {highlight}
               </span>
