@@ -1,3 +1,24 @@
+export type Project = {
+  id: number;
+  slug: string;
+  title: string;
+  category: string;
+  overview: string;
+  problem: string;
+  solution: string;
+  architecture: string;
+  impact: string;
+  challenges: string;
+  lessons: string;
+  image: string;
+  images?: string[];
+  techStack: string[];
+  features: string[];
+  metrics: string[];
+  github: string;
+  demo: string;
+};
+
 export const siteConfig = {
   name: "Telaynew Ambachew",
   shortName: "Telaynew",
@@ -153,7 +174,7 @@ export const experiences = [
   },
 ];
 
-export const projects = [
+export const projects: Project[] = [
   {
     id: 1,
     slug: "shopping-platform",

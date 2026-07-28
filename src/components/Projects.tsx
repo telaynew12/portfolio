@@ -31,10 +31,10 @@ export function Projects() {
                 style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
               >
                 {/* Image */}
-                <div className="relative overflow-hidden" style={{ height: (project as any).images ? '176px' : '240px' }}>
-                  {(project as any).images ? (
+                <div className="relative overflow-hidden" style={{ height: project.images ? '176px' : '240px' }}>
+                  {project.images ? (
                     <div className="grid grid-cols-2 h-full">
-                      {(project as any).images.map((img: string, i: number) => (
+                      {project.images.map((img, i) => (
                         <div key={i} className="relative h-full">
                           <Image
                             src={img}
