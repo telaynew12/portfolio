@@ -31,8 +31,7 @@ export const siteConfig = {
   github: "https://github.com/telaynew12",
   linkedin: "https://www.linkedin.com/in/telaynew-ambachew-44950825a/",
   portfolio: "https://telaynew12.github.io/",
-  resume:
-    "https://telaynew12.github.io/Telaynew%20AI%20and%20Full%20stack.pdf",
+  resume: "/Telaynew_Ambachew_CV.pdf",
   githubUsername: "telaynew12",
 };
 
