@@ -183,7 +183,7 @@ export const projects = [
     ],
     metrics: ["Fast UX", "Commerce flows", "Type-safe frontend"],
     github: "https://github.com/telaynew12/shoping",
-    demo: "/shopoing.mp4",
+    demo: "https://www.youtube.com/watch?v=awxx1p03Jns",
   },
   {
     id: 2,
